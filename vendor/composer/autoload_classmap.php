@@ -6,6 +6,14 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Docs\\ApiDocs' => $baseDir . '/app/Docs/ApiDocs.php',
+    'App\\Docs\\EndPoints\\AuthDocs' => $baseDir . '/app/Docs/EndPoints/AuthDocs.php',
+    'App\\Docs\\EndPoints\\TrekDocs' => $baseDir . '/app/Docs/EndPoints/TrekDocs.php',
+    'App\\Docs\\EndPoints\\UserDocs' => $baseDir . '/app/Docs/EndPoints/UserDocs.php',
+    'App\\Docs\\Schemas\\CommentSchema' => $baseDir . '/app/Docs/Schemas/CommentSchema.php',
+    'App\\Docs\\Schemas\\MeetingSchema' => $baseDir . '/app/Docs/Schemas/MeetingSchema.php',
+    'App\\Docs\\Schemas\\TrekSchema' => $baseDir . '/app/Docs/Schemas/TrekSchema.php',
+    'App\\Docs\\Schemas\\UserSchema' => $baseDir . '/app/Docs/Schemas/UserSchema.php',
     'App\\Http\\Controllers\\Api\\TrekController' => $baseDir . '/app/Http/Controllers/Api/TrekController.php',
     'App\\Http\\Controllers\\Api\\UserController' => $baseDir . '/app/Http/Controllers/Api/UserController.php',
     'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => $baseDir . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',

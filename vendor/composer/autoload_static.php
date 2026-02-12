@@ -570,6 +570,14 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
     );
 
     public static $classMap = array (
+        'App\\Docs\\ApiDocs' => __DIR__ . '/../..' . '/app/Docs/ApiDocs.php',
+        'App\\Docs\\EndPoints\\AuthDocs' => __DIR__ . '/../..' . '/app/Docs/EndPoints/AuthDocs.php',
+        'App\\Docs\\EndPoints\\TrekDocs' => __DIR__ . '/../..' . '/app/Docs/EndPoints/TrekDocs.php',
+        'App\\Docs\\EndPoints\\UserDocs' => __DIR__ . '/../..' . '/app/Docs/EndPoints/UserDocs.php',
+        'App\\Docs\\Schemas\\CommentSchema' => __DIR__ . '/../..' . '/app/Docs/Schemas/CommentSchema.php',
+        'App\\Docs\\Schemas\\MeetingSchema' => __DIR__ . '/../..' . '/app/Docs/Schemas/MeetingSchema.php',
+        'App\\Docs\\Schemas\\TrekSchema' => __DIR__ . '/../..' . '/app/Docs/Schemas/TrekSchema.php',
+        'App\\Docs\\Schemas\\UserSchema' => __DIR__ . '/../..' . '/app/Docs/Schemas/UserSchema.php',
         'App\\Http\\Controllers\\Api\\TrekController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/TrekController.php',
         'App\\Http\\Controllers\\Api\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/UserController.php',
         'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
