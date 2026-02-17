@@ -26,6 +26,7 @@ class User extends Authenticatable
         'phone',
         'password',
         'role_id',
+        "status"
     ];
 
     //protected $guarded = [

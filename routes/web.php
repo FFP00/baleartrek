@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Web\UserController;
+
 use App\Models\{
     Comment,
     Image,
@@ -47,7 +51,7 @@ Route::get('/comenardo', function() {
     return redirect()->route("test",['obligatorio' => 'Eduardo']);  
 });
 
-// Si no quieres poner el mismo prefijo 500 ves y ordenar por prefijo el codigo.
+// Si no quieres poner el mismo prefijo 500 veces y ordenar por prefijo el codigo.
 Route::prefix('admin')->group(function () {
 
     Route::get('/{modelo}/{id?}', function ($modelo,$id = null) {
@@ -62,5 +66,15 @@ Route::prefix('admin')->group(function () {
     });
 
 });
+
+Route::get('/test', function () {
+    return view("test");
+});
+
+Route::get('/usuario/{nombre}', function($nombre) {
+    return view('usuario', ['nombre' => $nombre]);
+});
+
+Route::resource('users', UserController::class);
 
 require __DIR__.'/auth.php';
