@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
+use App\Models\Role;
+
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +19,7 @@ class LoginRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return true; 
     }
 
     /**
@@ -40,6 +43,17 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
+
+        // Buscar usuario por email 
+        $user = User::where('email', $this->email)->first(); 
+
+        // Obtener el ID del rol admin 
+        $adminRoleId = Role::where('name', 'admin')->value('id'); 
+        
+        // Validar que el usuario exista y sea admin 
+        if (! $user || $user->role_id !== $adminRoleId){ 
+            throw ValidationException::withMessages([ 'email' => 'No tienes permisos para acceder.', ]); 
+        }
 
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());

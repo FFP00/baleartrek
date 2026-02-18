@@ -1,91 +1,103 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold text-gray-800">
-            Llista d'Usuaris
+        <h2 class="text-xl font-semibold text-gray-800 leading-tight">
+            Listado de Usuarios
         </h2>
     </x-slot>
 
-    <div class="py-6">
+    <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-            {{-- Missatge d'èxit --}}
+            
+            {{-- Mensaje de éxito --}}
             @if(session('success'))
-                <div class="mb-4 p-3 bg-green-100 text-green-800 rounded">
+                <div class="mb-4 p-3 bg-green-100 text-green-800 rounded shadow-sm">
                     {{ session('success') }}
                 </div>
             @endif
 
-            <div class="mb-4">
-                <a href="{{ route('users.create') }}"
-                   class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                    Crear Usuari
-                </a>
+            {{-- Buscador Simplificado --}}
+            <div class="bg-white p-6 shadow-sm rounded-lg mb-6 border border-gray-100">
+                <h3 class="font-bold mb-2 text-gray-700">Buscar usuarios</h3>
+                <p class="text-xs text-gray-500 uppercase mb-2">Nombre, Apellidos, DNI o Email</p>
+                
+                <form action="{{ route('users.index') }}" method="GET">
+                    <div class="relative">
+                        <input type="text" 
+                            name="search" 
+                            value="{{ request('search') }}" 
+                            placeholder="Buscar por nombre, DNI, correo..." 
+                            class="w-full border-gray-200 rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500 py-2.5">
+                    </div>
+                </form>
+
+                <p class="mt-2 text-xs text-gray-400">
+                    @if(request('search'))
+                        Mostrando resultados para: "<strong>{{ request('search') }}</strong>"
+                    @else
+                        Mostrando todos los usuarios
+                    @endif
+                </p>
             </div>
 
-            <div class="bg-white shadow-sm sm:rounded-lg p-6">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-gray-100 border-b">
-                            <th class="p-2">ID</th>
-                            <th class="p-2">Nom</th>
-                            <th class="p-2">Llinatge</th>
-                            <th class="p-2">DNI</th>
-                            <th class="p-2">Email</th>
-                            <th class="p-2">Telèfon</th>
-                            <th class="p-2">Rol</th>
-                            <th class="p-2">Estat</th>
-                            <th class="p-2">Creat</th>
-                            <th class="p-2">Actualitzat</th>
-                            <th class="p-2">Accions</th>
-                        </tr>
-                    </thead>
+            <div class="flex flex-col">
+                @foreach ($users as $user)
+                    {{-- Card Estilo Imagen --}}
+                    <div class="bg-white p-8 shadow-sm rounded-lg border border-gray-100">
 
-                    <tbody>
-                        @foreach ($users as $user)
-                            <tr class="border-b">
-                                <td class="p-2">{{ $user->id }}</td>
-                                <td class="p-2">{{ $user->name }}</td>
-                                <td class="p-2">{{ $user->lastname }}</td>
-                                <td class="p-2">{{ $user->dni }}</td>
-                                <td class="p-2">{{ $user->email }}</td>
-                                <td class="p-2">{{ $user->phone }}</td>
-                                <td class="p-2">{{ $user->role->name ?? 'Sense rol' }}</td>
+                        <h1 class="text-xl">
+                            <strong>{{ $user->name }} {{ $user->lastname }}</strong>
+                        </h1>
+                        <br>
 
-                                <td class="p-2">
-                                    <span class="{{ $user->status === 'y' ? 'text-green-600' : 'text-red-600' }}">
-                                        {{ $user->status === 'y' ? 'Actiu' : 'Inactiu' }}
-                                    </span>
-                                </td>
+                        <div class="space-y-1 text-gray-700">
+                            <p><strong>Email:</strong> {{ $user->email }}</p>
+                            <p><strong>DNI:</strong> {{ $user->dni }}</p>
+                            <p><strong>Teléfono:</strong> {{ $user->phone ?? 'N/A' }}</p>
+                            <p><strong>Rol:</strong> {{ $user->role->name }}</p>
+                            
+                            <p>
+                                <strong>Estado:</strong> 
+                                @if($user->status == 'y')
+                                    <span class="text-emerald-500 font-semibold">Activo</span>
+                                @else
+                                    <span class="text-red-500 font-semibold">Inactivo</span>
+                                @endif
+                            </p>
 
-                                <td class="p-2">{{ $user->created_at }}</td>
-                                <td class="p-2">{{ $user->updated_at }}</td>
+                            <p><span class="font-medium text-gray-600">created at:</span> {{ $user->created_at }}</p>
+                            <p><span class="font-medium text-gray-600">updated at:</span> {{ $user->updated_at }}</p>
+                        </div>
 
-                                <td class="p-2 flex gap-2">
-                                    <a href="{{ route('users.edit', $user->id) }}"
-                                       class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">
-                                        Editar
-                                    </a>
+                        <br>
+                        <div class="flex justify-between items-center">
+                            <div class="flex gap-2">
+                                <a href="{{ route('users.show', $user->id) }}" 
+                                   class="px-6 py-1.5 bg-emerald-500 text-white font-medium rounded hover:bg-emerald-600 transition text-sm">
+                                    Show
+                                </a>
+                                <a href="{{ route('users.edit', $user->id) }}" 
+                                   class="px-6 py-1.5 bg-blue-500 text-white font-medium rounded hover:bg-blue-600 transition text-sm">
+                                    Edit
+                                </a>
+                            </div>
 
-                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST"
-                                          onsubmit="return confirm('Segur que vols eliminar aquest usuari?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                                class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">
-                                            Eliminar
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                  onsubmit="return confirm('¿Seguro que quieres eliminar este usuario?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" 
+                                        class="px-6 py-1.5 bg-red-500 text-white font-medium rounded hover:bg-red-600 transition text-sm">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
 
-                {{-- PAGINACIÓN --}}
-                <div class="mt-4">
-                    {{ $users->links() }}
-                </div>
-
+            {{-- Paginación --}}
+            <div class="mt-8">
+                {{ $users->links() }}
             </div>
         </div>
     </div>

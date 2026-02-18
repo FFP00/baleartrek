@@ -19,6 +19,39 @@
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users')">
                         {{ __('Usuarios') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('users.create')" :active="request()->routeIs('users')">
+                        {{ __('Usuarios [Nueva]') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('comments.index')" :active="request()->routeIs('comments')">
+                        {{ __('Comentarios') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('interesting_places.index')" :active="request()->routeIs('interesting_places')">
+                        {{ __('Lugares Interesantes') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('interesting_places.create')" :active="request()->routeIs('interesting_places')">
+                        {{ __('Lugares Interesantes [Nueva]') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('municipality.index')" :active="request()->routeIs('municipality.index')">
+                        {{ __('Municipis') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('municipality.create')" :active="request()->routeIs('municipality.create')">
+                        {{ __('Municipis [Nou]') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('treks.index')" :active="request()->routeIs('trek.index')">
+                        {{ __('Excursiones') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('treks.create')" :active="request()->routeIs('trek.create')">
+                        {{ __('Excursiones [Nou]') }}
+                    </x-nav-link>
+                    
                 </div>
             </div>
 

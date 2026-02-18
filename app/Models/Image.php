@@ -9,7 +9,13 @@ use App\Models\Comment;
 class Image extends Model
 {
     use HasFactory;
-    
+
+    // Añade estas líneas:
+    protected $fillable = [
+        'url',
+        'comment_id',
+    ];
+
     public function comment()
     {
         return $this->belongsTo(Comment::class);

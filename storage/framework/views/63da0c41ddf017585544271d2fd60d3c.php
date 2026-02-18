@@ -10,56 +10,66 @@
 <?php $component->withAttributes([]); ?>
      <?php $__env->slot('header', null, []); ?> 
         <h2 class="text-xl font-semibold text-gray-800">
-            Detalls de l'Usuari
+            Detalles de el Usuario
         </h2>
      <?php $__env->endSlot(); ?>
 
-    <div class="py-6">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+        <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="flex flex-col">
+    <div class="bg-white p-8 shadow-sm rounded-lg border border-gray-100">
 
-            <div class="bg-white shadow-sm sm:rounded-lg p-6 space-y-4">
+                        <h1 class="text-xl">
+                            <strong><?php echo e($user->name); ?> <?php echo e($user->lastname); ?></strong>
+                        </h1>
+                        <br>
 
-                <div>
-                    <p class="text-gray-600"><strong>ID:</strong> <?php echo e($user->id); ?></p>
-                    <p class="text-gray-600"><strong>Nom:</strong> <?php echo e($user->name); ?></p>
-                    <p class="text-gray-600"><strong>Llinatge:</strong> <?php echo e($user->lastname); ?></p>
-                    <p class="text-gray-600"><strong>DNI:</strong> <?php echo e($user->dni); ?></p>
-                    <p class="text-gray-600"><strong>Email:</strong> <?php echo e($user->email); ?></p>
-                    <p class="text-gray-600"><strong>Telèfon:</strong> <?php echo e($user->phone); ?></p>
+                        <div class="space-y-1 text-gray-700">
+                            <p><strong>Email:</strong> <?php echo e($user->email); ?></p>
+                            <p><strong>DNI:</strong> <?php echo e($user->dni); ?></p>
+                            <p><strong>Teléfono:</strong> <?php echo e($user->phone ?? 'N/A'); ?></p>
+                            <p><strong>Rol:</strong> <?php echo e($user->role->name); ?></p>
+                            
+                            <p>
+                                <strong>Estado:</strong> 
+                                <?php if($user->status == 'y'): ?>
+                                    <span class="text-emerald-500 font-semibold">Activo</span>
+                                <?php else: ?>
+                                    <span class="text-red-500 font-semibold">Inactivo</span>
+                                <?php endif; ?>
+                            </p>
 
-                    <p class="text-gray-600">
-                        <strong>Rol:</strong> <?php echo e($user->role->name ?? 'Sense rol'); ?>
+                            <p><span class="font-medium text-gray-600">created at:</span> <?php echo e($user->created_at); ?></p>
+                            <p><span class="font-medium text-gray-600">updated at:</span> <?php echo e($user->updated_at); ?></p>
+                        </div>
 
-                    </p>
+                        <br>
+                        <div class="flex justify-between items-center">
+                            <div class="flex gap-2">
+                                <a href="<?php echo e(route('users.show', $user->id)); ?>" 
+                                   class="px-6 py-1.5 bg-emerald-500 text-white font-medium rounded hover:bg-emerald-600 transition text-sm">
+                                    Show
+                                </a>
+                                <a href="<?php echo e(route('users.edit', $user->id)); ?>" 
+                                   class="px-6 py-1.5 bg-blue-500 text-white font-medium rounded hover:bg-blue-600 transition text-sm">
+                                    Edit
+                                </a>
+                            </div>
 
-                    <p class="text-gray-600">
-                        <strong>Estat:</strong>
-                        <span class="<?php echo e($user->status == 'y' ? 'text-green-600' : 'text-red-600'); ?>">
-                            <?php echo e($user->status == 'y' ? 'Actiu' : 'Inactiu'); ?>
-
-                        </span>
-                    </p>
-
-                    <p class="text-gray-600"><strong>Creat:</strong> <?php echo e($user->created_at); ?></p>
-                    <p class="text-gray-600"><strong>Actualitzat:</strong> <?php echo e($user->updated_at); ?></p>
-                </div>
-
-                <div class="pt-4 flex gap-3">
-                    <a href="<?php echo e(route('users.index')); ?>"
-                       class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">
-                        Tornar al llistat
-                    </a>
-
-                    <a href="<?php echo e(route('users.edit', $user->id)); ?>"
-                       class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                        Editar
-                    </a>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
+                            <form action="<?php echo e(route('users.destroy', $user->id)); ?>" method="POST"
+                                  onsubmit="return confirm('¿Seguro que quieres eliminar este usuario?')">
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('DELETE'); ?>
+                                <button type="submit" 
+                                        class="px-6 py-1.5 bg-red-500 text-white font-medium rounded hover:bg-red-600 transition text-sm">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>

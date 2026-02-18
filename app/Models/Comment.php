@@ -17,6 +17,7 @@ class Comment extends Model
         'score',
         'user_id',
         'meeting_id',
+        "status"
     ];
 
     public function user()

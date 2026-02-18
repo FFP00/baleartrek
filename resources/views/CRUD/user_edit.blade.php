@@ -109,11 +109,6 @@
                             Actualitzar
                         </button>
 
-                        <a href="{{ route('users.index') }}"
-                           class="ms-3 px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">
-                            Tornar
-                        </a>
-                    </div>
 
                 </form>
             </div>

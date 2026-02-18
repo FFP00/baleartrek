@@ -10,7 +10,7 @@
 <?php $component->withAttributes([]); ?>
      <?php $__env->slot('header', null, []); ?> 
         <h2 class="text-xl font-semibold text-gray-800">
-            Editar Usuari
+            Editar Comentari
         </h2>
      <?php $__env->endSlot(); ?>
 
@@ -29,23 +29,23 @@
             <?php endif; ?>
 
             <div class="bg-white shadow-sm sm:rounded-lg p-6">
-                <form action="<?php echo e(route('users.update', $user->id)); ?>" method="POST" class="space-y-4">
+                <form action="<?php echo e(route('comments.update', $comment->id)); ?>" method="POST" enctype="multipart/form-data" class="space-y-4">
                     <?php echo csrf_field(); ?>
                     <?php echo method_field('PUT'); ?>
 
                     
                     <div>
-                        <label class="block font-medium">Nom</label>
-                        <input type="text" name="name" value="<?php echo e(old('name', $user->name)); ?>"
-                               class="w-full border-gray-300 rounded <?php $__errorArgs = ['name'];
+                        <label class="block font-medium">Comentari</label>
+                        <textarea name="comment" rows="3" 
+                                  class="w-full border-gray-300 rounded <?php $__errorArgs = ['comment'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>">
-                        <?php $__errorArgs = ['name'];
+unset($__errorArgs, $__bag); ?>"><?php echo e(old('comment', $comment->comment)); ?></textarea>
+                        <?php $__errorArgs = ['comment'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -59,9 +59,9 @@ unset($__errorArgs, $__bag); ?>
 
                     
                     <div>
-                        <label class="block font-medium">Llinatge</label>
-                        <input type="text" name="lastname" value="<?php echo e(old('lastname', $user->lastname)); ?>"
-                               class="w-full border-gray-300 rounded <?php $__errorArgs = ['lastname'];
+                        <label class="block font-medium">Puntuació</label>
+                        <input type="number" name="score" value="<?php echo e(old('score', $comment->score)); ?>"
+                               class="w-full border-gray-300 rounded <?php $__errorArgs = ['score'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -69,103 +69,7 @@ $message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($messag
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>">
-                        <?php $__errorArgs = ['lastname'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <p class="text-red-600 text-sm"><?php echo e($message); ?></p>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-
-                    
-                    <div>
-                        <label class="block font-medium">DNI</label>
-                        <input type="text" name="dni" value="<?php echo e(old('dni', $user->dni)); ?>"
-                               class="w-full border-gray-300 rounded <?php $__errorArgs = ['dni'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>">
-                        <?php $__errorArgs = ['dni'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <p class="text-red-600 text-sm"><?php echo e($message); ?></p>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-
-                    
-                    <div>
-                        <label class="block font-medium">Email</label>
-                        <input type="email" name="email" value="<?php echo e(old('email', $user->email)); ?>"
-                               class="w-full border-gray-300 rounded <?php $__errorArgs = ['email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>">
-                        <?php $__errorArgs = ['email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <p class="text-red-600 text-sm"><?php echo e($message); ?></p>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-
-                    
-                    <div>
-                        <label class="block font-medium">Telèfon</label>
-                        <input type="text" name="phone" value="<?php echo e(old('phone', $user->phone)); ?>"
-                               class="w-full border-gray-300 rounded <?php $__errorArgs = ['phone'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>">
-                        <?php $__errorArgs = ['phone'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <p class="text-red-600 text-sm"><?php echo e($message); ?></p>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-
-                    
-                    <div>
-                        <label class="block font-medium">Rol</label>
-                        <select name="role_id" class="w-full border-gray-300 rounded">
-                            <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($role->id); ?>"
-                                    <?php echo e($role->id == $user->role_id ? 'selected' : ''); ?>>
-                                    <?php echo e($role->name); ?>
-
-                                </option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-                        <?php $__errorArgs = ['role_id'];
+                        <?php $__errorArgs = ['score'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -181,10 +85,31 @@ unset($__errorArgs, $__bag); ?>
                     <div>
                         <label class="block font-medium">Estat</label>
                         <select name="status" class="w-full border-gray-300 rounded">
-                            <option value="y" <?php echo e($user->status == 'y' ? 'selected' : ''); ?>>Actiu</option>
-                            <option value="n" <?php echo e($user->status == 'n' ? 'selected' : ''); ?>>Inactiu</option>
+                            <option value="y" <?php echo e($comment->status == 'y' ? 'selected' : ''); ?>>Actiu</option>
+                            <option value="n" <?php echo e($comment->status == 'n' ? 'selected' : ''); ?>>Inactiu</option>
                         </select>
-                        <?php $__errorArgs = ['status'];
+                    </div>
+
+
+                    
+                    <div>
+                        <label class="block font-medium">Usuari</label>
+                        <select name="user_id" class="w-full border-gray-300 rounded <?php $__errorArgs = ['user_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>">
+                            <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($user->id); ?>" <?php echo e(old('user_id', $comment->user_id) == $user->id ? 'selected' : ''); ?>>
+                                    <?php echo e($user->name); ?>
+
+                                </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                        <?php $__errorArgs = ['user_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -197,12 +122,51 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     
+                    <div>
+                        <label class="block font-medium">Meeting</label>
+                        <select name="meeting_id" class="w-full border-gray-300 rounded <?php $__errorArgs = ['meeting_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>">
+                            <?php $__currentLoopData = $meetings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $meeting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($meeting->id); ?>" <?php echo e(old('meeting_id', $comment->meeting_id) == $meeting->id ? 'selected' : ''); ?>>
+                                    ID: <?php echo e($meeting->id); ?>
+
+                                </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                        <?php $__errorArgs = ['meeting_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <p class="text-red-600 text-sm"><?php echo e($message); ?></p>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
+
+                    
+
+                        <div>
+                            <label class="block font-medium">Imatges associades</label>
+                            <input type="file" name="images[]" multiple accept="image/*"
+                                class="w-full border-gray-300 rounded p-2">
+                            <p class="text-xs text-gray-500 mt-1">Pots seleccionar diverses imatges alhora.</p>
+                        </div>
+
+                    
                     <div class="pt-4">
                         <button type="submit"
                                 class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
                             Actualitzar
                         </button>
-
+                    </div>
 
                 </form>
             </div>
@@ -218,5 +182,4 @@ unset($__errorArgs, $__bag); ?>
 <?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
 <?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
 <?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
-<?php endif; ?>
-<?php /**PATH /var/www/html/resources/views/CRUD/user_edit.blade.php ENDPATH**/ ?>
+<?php endif; ?><?php /**PATH /var/www/html/resources/views/CRUD/comment_edit.blade.php ENDPATH**/ ?>
