@@ -41,7 +41,7 @@
                     </x-nav-link>
 
                     <x-nav-link :href="route('municipality.create')" :active="request()->routeIs('municipality.create')">
-                        {{ __('Municipis [Nou]') }}
+                        {{ __('Municipis [Nueva]') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('treks.index')" :active="request()->routeIs('trek.index')">
@@ -49,7 +49,15 @@
                     </x-nav-link>
 
                     <x-nav-link :href="route('treks.create')" :active="request()->routeIs('trek.create')">
-                        {{ __('Excursiones [Nou]') }}
+                        {{ __('Excursiones [Nueva]') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('meetings.index')" :active="request()->routeIs('meetings.index')">
+                        {{ __('Reuniones') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('meetings.create')" :active="request()->routeIs('meetings.create')">
+                        {{ __('Reuniones [Nueva]') }}
                     </x-nav-link>
                     
                 </div>

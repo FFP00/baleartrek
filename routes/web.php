@@ -10,6 +10,7 @@ use App\Http\Controllers\Web\CommentController;
 use App\Http\Controllers\Web\InterestingPlaceController;
 use App\Http\Controllers\Web\MunicipalityController;
 use App\Http\Controllers\Web\TrekController;
+use App\Http\Controllers\Web\MeetingController;
 
 
 Route::get('/', function () {
@@ -31,5 +32,6 @@ Route::resource('comments', CommentController::class);
 Route::resource('interesting_places', InterestingPlaceController::class);
 Route::resource('municipality', MunicipalityController::class);
 Route::resource('treks', TrekController::class);
+Route::resource('meetings', MeetingController::class);
 
 require __DIR__.'/auth.php';

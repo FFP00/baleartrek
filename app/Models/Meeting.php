@@ -17,6 +17,11 @@ class Meeting extends Model
       'appDateEnd',
     ];
 
+    public function trek()
+    {
+        return $this->belongsTo(Trek::class);
+    }
+    
     public function comments()
     {
       return $this->hasMany(Comment::class);
