@@ -51,7 +51,18 @@
                         </select>
                     </div>
 
-                    <div class="pt-4">
+                    <div class="pt-4 border-t border-gray-100">
+                        <label class="block font-medium mb-2">Llocs d'Interès (Ruta)</label>
+                        
+                        <div id="places-container" class="space-y-2">
+                            </div>
+
+                        <button type="button" id="add-place" class="mt-3 text-sm bg-gray-50 px-4 py-2 rounded border border-gray-200 hover:bg-gray-100 transition">
+                            + Afegir lloc d'interès
+                        </button>
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-100">
                         <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium transition">
                             Crear Excursió
                         </button>
@@ -60,4 +71,44 @@
             </div>
         </div>
     </div>
+
+    <template id="place-row-template">
+        <div class="flex items-center gap-2 p-2 bg-gray-50 rounded border border-gray-100 place-row">
+            <span class="font-bold text-gray-400 w-6 order-label">1.</span>
+            <select name="places[]" class="flex-1 border-gray-300 rounded text-sm">
+                <option value="">Selecciona un lloc...</option>
+                @foreach($interestingPlaces as $place)
+                    <option value="{{ $place->id }}">{{ $place->name }}</option>
+                @endforeach
+            </select>
+            <button type="button" class="remove-place text-red-500 hover:text-red-700 px-2 font-bold text-xl">&times;</button>
+        </div>
+    </template>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('places-container');
+            const btnAdd = document.getElementById('add-place');
+            const template = document.getElementById('place-row-template');
+
+            function reorderLabels() {
+                container.querySelectorAll('.place-row').forEach((row, index) => {
+                    row.querySelector('.order-label').innerText = (index + 1) + '.';
+                });
+            }
+
+            btnAdd.addEventListener('click', () => {
+                const clone = template.content.cloneNode(true);
+                container.appendChild(clone);
+                reorderLabels();
+            });
+
+            container.addEventListener('click', (e) => {
+                if (e.target.classList.contains('remove-place')) {
+                    e.target.closest('.place-row').remove();
+                    reorderLabels();
+                }
+            });
+        });
+    </script>
 </x-app-layout>

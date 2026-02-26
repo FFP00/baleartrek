@@ -81,15 +81,6 @@
                                 </a>
                             </div>
 
-                            <form action="{{ route('users.destroy', $user->id) }}" method="POST"
-                                  onsubmit="return confirm('¿Seguro que quieres eliminar este usuario?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" 
-                                        class="px-6 py-1.5 bg-red-500 text-white font-medium rounded hover:bg-red-600 transition text-sm">
-                                    Delete
-                                </button>
-                            </form>
                         </div>
                     </div>
                 @endforeach

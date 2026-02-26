@@ -7,6 +7,14 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+            {{-- Errors --}}
+            @if(session('error'))
+                <div class="mb-4 p-3 bg-red-100 text-red-800 rounded shadow-sm">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="flex flex-col">
                 <div class="bg-white p-8 shadow-sm rounded-lg border border-gray-100">
 
@@ -26,9 +34,9 @@
                     <br>
                     <div class="flex justify-between items-center text-sm font-medium">
                         <div class="flex gap-2">
-                            <a href="{{ route('interesting_places.index') }}" 
+                            <a href="{{ route('interesting_places.show', $interestingPlace->id) }}" 
                                 class="px-6 py-1.5 bg-emerald-500 text-white rounded hover:bg-emerald-600 transition">
-                                Tornar
+                                Show
                             </a>
                             <a href="{{ route('interesting_places.edit', $interestingPlace->id) }}" 
                                 class="px-6 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
@@ -37,7 +45,7 @@
                         </div>
 
                         <form action="{{ route('interesting_places.destroy', $interestingPlace->id) }}" method="POST"
-                                onsubmit="return confirm('¿Seguro que quieres eliminar este lugar?')">
+                                onsubmit="return confirm('Seguro?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" 

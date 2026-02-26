@@ -16,23 +16,23 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users')">
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                         {{ __('Usuarios') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('users.create')" :active="request()->routeIs('users')">
+                    <x-nav-link :href="route('users.create')" :active="request()->routeIs('users.create')">
                         {{ __('Usuarios [Nueva]') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('comments.index')" :active="request()->routeIs('comments')">
+                    <x-nav-link :href="route('comments.index')" :active="request()->routeIs('comments.index')">
                         {{ __('Comentarios') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('interesting_places.index')" :active="request()->routeIs('interesting_places')">
+                    <x-nav-link :href="route('interesting_places.index')" :active="request()->routeIs('interesting_places.index')">
                         {{ __('Lugares Interesantes') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('interesting_places.create')" :active="request()->routeIs('interesting_places')">
+                    <x-nav-link :href="route('interesting_places.create')" :active="request()->routeIs('interesting_places.create')">
                         {{ __('Lugares Interesantes [Nueva]') }}
                     </x-nav-link>
 
@@ -44,11 +44,11 @@
                         {{ __('Municipis [Nueva]') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('treks.index')" :active="request()->routeIs('trek.index')">
+                    <x-nav-link :href="route('treks.index')" :active="request()->routeIs('treks.index')">
                         {{ __('Excursiones') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('treks.create')" :active="request()->routeIs('trek.create')">
+                    <x-nav-link :href="route('treks.create')" :active="request()->routeIs('treks.create')">
                         {{ __('Excursiones [Nueva]') }}
                     </x-nav-link>
 

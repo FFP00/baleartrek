@@ -15,6 +15,17 @@
                 </div>
             @endif
 
+            {{-- Errors --}}
+            @if ($errors->any())
+                <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
+                    <ul class="list-disc ms-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <div class="flex flex-col ">
                 @foreach ($comments as $comment)
                     <div class="bg-white p-8 shadow-sm rounded-lg border border-gray-100">
@@ -68,15 +79,7 @@
                                 </a>
                             </div>
 
-                            <form action="{{ route('comments.destroy', $comment->id) }}" method="POST"
-                                  onsubmit="return confirm('¿Seguro que quieres eliminar este comentario?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" 
-                                        class="px-6 py-1.5 bg-red-500 text-white font-medium rounded hover:bg-red-600 transition text-sm">
-                                    Delete
-                                </button>
-                            </form>
+
                         </div>
                     </div>
                 @endforeach

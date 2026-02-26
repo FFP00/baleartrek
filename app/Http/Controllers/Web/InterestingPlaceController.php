@@ -7,6 +7,7 @@ use App\Models\InterestingPlace;
 use App\Models\PlaceType;
 use App\Http\Requests\Web\InterestingPlaceRequest;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class InterestingPlaceController extends Controller
 {
@@ -75,7 +76,7 @@ class InterestingPlaceController extends Controller
 
         $interestingPlace->update($validated);
 
-        return redirect()->route('interesting_places.index')->with('success', 'Lloc actualitzat!');
+        return redirect()->route('interesting_places.show',$interestingPlace->id)->with('success', 'Actualitzat!');
     }
 
     /**
@@ -83,7 +84,11 @@ class InterestingPlaceController extends Controller
      */
     public function destroy(InterestingPlace $interestingPlace)
     {
-        $interestingPlace->deleteOrFail();
-        return back()->with('status', 'Lloc eliminat correctament');
+        try{ 
+            $interestingPlace->deleteOrFail();
+            return redirect()->route('interesting_places.index')->with('status', 'Lloc eliminat correctament');
+        }catch(QueryException $e){
+            return back()->with('error', 'No se pot eliminar el lloc');
+        }
     }
 }

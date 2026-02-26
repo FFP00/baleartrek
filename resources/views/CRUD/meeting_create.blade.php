@@ -9,7 +9,7 @@
                 <form action="{{ route('meetings.store') }}" method="POST" class="space-y-4">
                     @csrf
                     <div>
-                        <label class="block font-medium">Excursió (Trek)</label>
+                        <label class="block font-medium">Trek</label>
                         <select name="trek_id" class="w-full border-gray-300 rounded">
                             @foreach($treks as $trek)
                                 <option value="{{ $trek->id }}">{{ $trek->name }}</option>

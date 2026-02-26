@@ -9,50 +9,15 @@
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
      <?php $__env->slot('header', null, []); ?> 
-        <h2 class="text-xl font-semibold text-gray-800 leading-tight">
-            Listado de Usuarios
+        <h2 class="text-xl font-semibold text-gray-800">
+            Detalles de el Usuario
         </h2>
      <?php $__env->endSlot(); ?>
 
-    <div class="py-12">
+        <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            
-            
-            <?php if(session('success')): ?>
-                <div class="mb-4 p-3 bg-green-100 text-green-800 rounded shadow-sm">
-                    <?php echo e(session('success')); ?>
-
-                </div>
-            <?php endif; ?>
-
-            
-            <div class="bg-white p-6 shadow-sm rounded-lg mb-6 border border-gray-100">
-                <h3 class="font-bold mb-2 text-gray-700">Buscar usuarios</h3>
-                <p class="text-xs text-gray-500 uppercase mb-2">Nombre, Apellidos, DNI o Email</p>
-                
-                <form action="<?php echo e(route('users.index')); ?>" method="GET">
-                    <div class="relative">
-                        <input type="text" 
-                            name="search" 
-                            value="<?php echo e(request('search')); ?>" 
-                            placeholder="Buscar por nombre, DNI, correo..." 
-                            class="w-full border-gray-200 rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500 py-2.5">
-                    </div>
-                </form>
-
-                <p class="mt-2 text-xs text-gray-400">
-                    <?php if(request('search')): ?>
-                        Mostrando resultados para: "<strong><?php echo e(request('search')); ?></strong>"
-                    <?php else: ?>
-                        Mostrando todos los usuarios
-                    <?php endif; ?>
-                </p>
-            </div>
-
-            <div class="flex flex-col">
-                <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    
-                    <div class="bg-white p-8 shadow-sm rounded-lg border border-gray-100">
+    <div class="flex flex-col">
+    <div class="bg-white p-8 shadow-sm rounded-lg border border-gray-100">
 
                         <h1 class="text-xl">
                             <strong><?php echo e($user->name); ?> <?php echo e($user->lastname); ?></strong>
@@ -90,19 +55,11 @@
                                     Edit
                                 </a>
                             </div>
-
                         </div>
                     </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </div>
-
-            
-            <div class="mt-8">
-                <?php echo e($users->links()); ?>
-
-            </div>
-        </div>
-    </div>
+                    </div>
+                    </div>
+                    </div>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
@@ -112,4 +69,5 @@
 <?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
 <?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
 <?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
-<?php endif; ?><?php /**PATH /var/www/html/resources/views/CRUD/user_index.blade.php ENDPATH**/ ?>
+<?php endif; ?>
+<?php /**PATH /var/www/html/resources/views/CRUD/user_show.blade.php ENDPATH**/ ?>

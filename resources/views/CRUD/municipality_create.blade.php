@@ -2,6 +2,13 @@
     <x-slot name="header"><h2 class="text-xl font-semibold text-gray-800">Crear Municipi</h2></x-slot>
     <div class="py-6">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+                        {{-- Errors --}}
+            @if(session('error'))
+                <div class="mb-4 p-3 bg-red-100 text-red-800 rounded shadow-sm">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="bg-white shadow-sm sm:rounded-lg p-6">
                 <form action="{{ route('municipality.store') }}" method="POST" class="space-y-4">
                     @csrf

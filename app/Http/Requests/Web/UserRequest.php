@@ -31,7 +31,6 @@ class UserRequest extends FormRequest
             'phone' => 'required',
             'role_id' => 'required',
             'status' => 'required|in:y,n',
-            // Solo obligatorio al crear
             'password' => $this->isMethod('POST') ? 'required|min:6' : 'nullable',
         ];
     }
@@ -47,6 +46,7 @@ class UserRequest extends FormRequest
             'phone.required' => "Has d'informar un telèfon",
             'dni.unique' => "El DNI ja està registrat",
             'email.unique' => "L'email ja està registrat",
+            'password.required' => "El user ha de tenir un password",
 
         ];
     }

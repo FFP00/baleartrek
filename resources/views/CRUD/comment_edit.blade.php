@@ -5,6 +5,9 @@
         </h2>
     </x-slot>
 
+    {{-- CDN de CKEditor --}}
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
     <div class="py-6">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
 
@@ -24,22 +27,13 @@
                     @csrf
                     @method('PUT')
 
-                    {{-- Comentario --}}
+                    {{-- Comentario con CKEditor --}}
                     <div>
                         <label class="block font-medium">Comentari</label>
-                        <textarea name="comment" rows="3" 
+                        {{-- Añadido id="comment" --}}
+                        <textarea id="comment" name="comment" rows="3" 
                                   class="w-full border-gray-300 rounded @error('comment') border-red-500 @enderror">{{ old('comment', $comment->comment) }}</textarea>
                         @error('comment')
-                            <p class="text-red-600 text-sm">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    {{-- Score --}}
-                    <div>
-                        <label class="block font-medium">Puntuació</label>
-                        <input type="number" name="score" value="{{ old('score', $comment->score) }}"
-                               class="w-full border-gray-300 rounded @error('score') border-red-500 @enderror">
-                        @error('score')
                             <p class="text-red-600 text-sm">{{ $message }}</p>
                         @enderror
                     </div>
@@ -53,45 +47,41 @@
                         </select>
                     </div>
 
-
-                    {{-- Usuario --}}
+                    {{-- Score - Bloqueado --}}
                     <div>
-                        <label class="block font-medium">Usuari</label>
-                        <select name="user_id" class="w-full border-gray-300 rounded @error('user_id') border-red-500 @enderror">
-                            @foreach($users as $user)
-                                <option value="{{ $user->id }}" {{ old('user_id', $comment->user_id) == $user->id ? 'selected' : '' }}>
-                                    {{ $user->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('user_id')
-                            <p class="text-red-600 text-sm">{{ $message }}</p>
-                        @enderror
+                        <label class="block font-medium text-gray-500">Puntuació</label>
+                        <input type="number" name="score"
+                            value="{{ $comment->score }}"
+                            readonly
+                            class="w-full border-gray-300 rounded bg-gray-100 cursor-not-allowed text-gray-500 shadow-none">
+                        <p class="text-xs text-gray-400 mt-1 italic">El valor de 'score' no es pot modificar.</p>
                     </div>
 
-                    {{-- Reunión --}}
+                    {{-- Usuario - Solo información --}}
                     <div>
-                        <label class="block font-medium">Meeting</label>
-                        <select name="meeting_id" class="w-full border-gray-300 rounded @error('meeting_id') border-red-500 @enderror">
-                            @foreach($meetings as $meeting)
-                                <option value="{{ $meeting->id }}" {{ old('meeting_id', $comment->meeting_id) == $meeting->id ? 'selected' : '' }}>
-                                    ID: {{ $meeting->id }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('meeting_id')
-                            <p class="text-red-600 text-sm">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    {{-- Dins del <form> de create i edit --}}
-
-                        <div>
-                            <label class="block font-medium">Imatges associades</label>
-                            <input type="file" name="images[]" multiple accept="image/*"
-                                class="w-full border-gray-300 rounded p-2">
-                            <p class="text-xs text-gray-500 mt-1">Pots seleccionar diverses imatges alhora.</p>
+                        <label class="block font-medium text-gray-500">Usuari</label>
+                        <div class="w-full border border-gray-200 rounded p-2 bg-gray-50 text-gray-600">
+                            {{ $comment->user->name }}
                         </div>
+                        <input type="hidden" name="user_id" value="{{ $comment->user_id }}">
+                    </div>
+
+                    {{-- Meeting - Solo información --}}
+                    <div>
+                        <label class="block font-medium text-gray-500">Meeting</label>
+                        <div class="w-full border border-gray-200 rounded p-2 bg-gray-50 text-gray-600">
+                            ID: {{ $comment->meeting_id }}
+                        </div>
+                        <input type="hidden" name="meeting_id" value="{{ $comment->meeting_id }}">
+                    </div>
+
+                    {{-- Imatges --}}
+                    <div>
+                        <label class="block font-medium">Imatges associades</label>
+                        <input type="file" name="images[]" multiple accept="image/*"
+                            class="w-full border-gray-300 rounded p-2">
+                        <p class="text-xs text-gray-500 mt-1">Pots seleccionar diverses imatges alhora.</p>
+                    </div>
 
                     {{-- Botón --}}
                     <div class="pt-4">
@@ -106,4 +96,15 @@
 
         </div>
     </div>
+
+    {{-- Inicialización de CKEditor --}}
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#comment'), {
+                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList']
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 </x-app-layout>

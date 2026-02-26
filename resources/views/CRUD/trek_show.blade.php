@@ -7,6 +7,11 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @error('constraint')
+                <div class="mb-4 p-4 bg-red-100 text-red-700 rounded border-l-4 border-red-500">
+                    {{ $message }}
+                </div>
+            @enderror
             <div class="flex flex-col">
                 <div class="bg-white p-8 shadow-sm rounded-lg border border-gray-100">
 
@@ -19,18 +24,15 @@
                         <p><strong>Registre: </strong>{{ $trek->regNumber }}</p>
                         <p><strong>Municipi: </strong>{{ $trek->municipality->name }}</p>
                         <p><strong>Estat: </strong>{{ $trek->status == 'y' ? 'Activa' : 'Inactiva' }}</p>
-                        <p><strong>Puntuació Mitjana: </strong>{{ $trek->totalScore }} ({{ $trek->countScore }} vots)</p>
                         
                         <br>
-                        <p><strong>Llocs d'Interès Remarcables:</strong></p>
+                        <p><strong>Llocs d'Interès:</strong></p>
                         <ul class="list-disc ml-8 mt-2">
                             @forelse($trek->interestingPlaces->sortBy('pivot.order') as $place)
                                 <li>
-                                    <strong>Ordre {{ $place->pivot->order }}:</strong> {{ $place->name }} 
-                                    <span class="text-sm text-gray-500">({{ $place->gps }})</span>
+                                    <strong> {{ $place->pivot->order }}:</strong> {{ $place->name }} 
                                 </li>
                             @empty
-                                <li class="text-gray-500 italic">No hi ha llocs assignats a aquesta excursió.</li>
                             @endforelse
                         </ul>
                         
@@ -40,11 +42,11 @@
                     </div>
 
                     <br>
-                    <div class="flex justify-between items-center text-sm font-medium border-t pt-4">
+                    <div class="flex justify-between items-center text-sm font-medium">
                         <div class="flex gap-2">
-                            <a href="{{ route('treks.index') }}" 
+                            <a href="{{ route('treks.show',$trek->id) }}" 
                                 class="px-6 py-1.5 bg-emerald-500 text-white rounded hover:bg-emerald-600 transition">
-                                Tornar
+                                Show
                             </a>
                             <a href="{{ route('treks.edit', $trek->id) }}" 
                                 class="px-6 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
@@ -52,8 +54,7 @@
                             </a>
                         </div>
 
-                        <form action="{{ route('treks.destroy', $trek->id) }}" method="POST"
-                                onsubmit="return confirm('¿Seguro que quieres eliminar esta excursión?')">
+                        <form action="{{ route('treks.destroy', $trek->id) }}" method="POST" onsubmit="return confirm('Seguro?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" 

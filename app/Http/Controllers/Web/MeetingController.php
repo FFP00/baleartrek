@@ -27,11 +27,14 @@ class MeetingController extends Controller
     public function store(MeetingRequest $request)
     {
         Meeting::create($request->validated());
+        // Corregido: meetings.index (en plural)
         return redirect()->route('meetings.index')->with('success', 'Trobada creada correctament!');
     }
 
     public function show(Meeting $meeting)
     {
+        // Esto es vital para ver el nombre del Trek en el detalle
+        $meeting->load(['user', 'trek']); 
         return view('CRUD.meeting_show', compact('meeting'));
     }
 
@@ -52,7 +55,7 @@ class MeetingController extends Controller
     {
         try {
             $meeting->delete();
-            return back()->with('success', 'Trobada eliminada');
+            return redirect()->route('meetings.index')->with('success', 'Trobada eliminada');
         } catch (\Exception $e) {
             return back()->withErrors(['constraint' => 'No es pot eliminar: té dades vinculades.']);
         }

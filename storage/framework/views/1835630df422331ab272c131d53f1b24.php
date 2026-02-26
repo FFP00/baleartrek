@@ -10,12 +10,13 @@
 <?php $component->withAttributes([]); ?>
      <?php $__env->slot('header', null, []); ?> 
         <h2 class="text-xl font-semibold text-gray-800 leading-tight">
-            Llistat d'Excursions
+            Llistat de Llocs d'Interès
         </h2>
      <?php $__env->endSlot(); ?>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            
             
             <?php if(session('success')): ?>
                 <div class="mb-4 p-3 bg-green-100 text-green-800 rounded shadow-sm">
@@ -23,65 +24,47 @@
 
                 </div>
             <?php endif; ?>
-
-            <?php $__errorArgs = ['constraint'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                <div class="mb-4 p-4 bg-red-100 text-red-700 rounded border-l-4 border-red-500">
-                    <?php echo e($message); ?>
+            
+            
+            <?php if(session('error')): ?>
+                <div class="mb-4 p-3 bg-red-100 text-red-800 rounded shadow-sm">
+                    <?php echo e(session('error')); ?>
 
                 </div>
-            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+            <?php endif; ?>
 
-            <div class="flex flex-col">
-                <?php $__currentLoopData = $treks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $trek): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <div class="flex flex-col ">
+                <?php $__currentLoopData = $interestingPlaces; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $place): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="bg-white p-8 shadow-sm rounded-lg border border-gray-100">
 
                         <h1 class="text-xl">
-                            <strong><?php echo e($trek->name); ?></strong>
+                            <strong><?php echo e($place->name); ?></strong>
                         </h1>
                         <br>
 
-                    <div class="space-y-1 text-gray-700">
-                        <p><strong>Registre: </strong><?php echo e($trek->regNumber); ?></p>
-                        <p><strong>Municipi: </strong><?php echo e($trek->municipality->name); ?></p>
-                        <p><strong>Estat: </strong><?php echo e($trek->status == 'y' ? 'Activa' : 'Inactiva'); ?></p>
-                        
-                        <br>
-                        <p><strong>Llocs d'Interès:</strong></p>
-                        <ul class="list-disc ml-8 mt-2">
-                            <?php $__empty_1 = true; $__currentLoopData = $trek->interestingPlaces->sortBy('pivot.order'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $place): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                                <li>
-                                    <strong> <?php echo e($place->pivot->order); ?>:</strong> <?php echo e($place->name); ?> 
-                                </li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                            <?php endif; ?>
-                        </ul>
-                        
-                        <br>
-                        <p><span class="font-medium text-gray-600">created at:</span> <?php echo e($trek->created_at); ?></p>
-                        <p><span class="font-medium text-gray-600">updated at:</span> <?php echo e($trek->updated_at); ?></p>
-                    </div>
+                        <div class="space-y-1 text-gray-700">
+                            <p><strong>GPS: </strong><?php echo e($place->gps); ?></p>
+                            <p><strong>Tipus de Lloc:</strong> <?php echo e($place->placeType->name); ?></p>
+
+                            <p><span class="font-medium text-gray-600">created at:</span> <?php echo e($place->created_at); ?></p>
+                            <p><span class="font-medium text-gray-600">updated at:</span> <?php echo e($place->updated_at); ?></p>
+                        </div>
                         
                         <br>
                         <div class="flex justify-between items-center text-sm font-medium">
                             <div class="flex gap-2">
-                                <a href="<?php echo e(route('treks.show', $trek->id)); ?>" 
+                                <a href="<?php echo e(route('interesting_places.show', $place->id)); ?>" 
                                    class="px-6 py-1.5 bg-emerald-500 text-white rounded hover:bg-emerald-600 transition">
                                     Show
                                 </a>
-                                <a href="<?php echo e(route('treks.edit', $trek->id)); ?>" 
+                                <a href="<?php echo e(route('interesting_places.edit', $place->id)); ?>" 
                                    class="px-6 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
                                     Edit
                                 </a>
                             </div>
 
-                            <form action="<?php echo e(route('treks.destroy', $trek->id)); ?>" method="POST"onsubmit="return confirm('Seguro?')" >
+                            <form action="<?php echo e(route('interesting_places.destroy', $place->id)); ?>" method="POST"
+                                  onsubmit="return confirm('Seguro?')">
                                 <?php echo csrf_field(); ?>
                                 <?php echo method_field('DELETE'); ?>
                                 <button type="submit" 
@@ -94,8 +77,9 @@ unset($__errorArgs, $__bag); ?>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
+            
             <div class="mt-8">
-                <?php echo e($treks->links()); ?>
+                <?php echo e($interestingPlaces->links()); ?>
 
             </div>
         </div>
@@ -109,4 +93,4 @@ unset($__errorArgs, $__bag); ?>
 <?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
 <?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
 <?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
-<?php endif; ?><?php /**PATH /var/www/html/resources/views/CRUD/trek_index.blade.php ENDPATH**/ ?>
+<?php endif; ?><?php /**PATH /var/www/html/resources/views/CRUD/interesting_place_index.blade.php ENDPATH**/ ?>

@@ -14,6 +14,13 @@
                     {{ session('success') }}
                 </div>
             @endif
+            
+            {{-- Errors --}}
+            @if(session('error'))
+                <div class="mb-4 p-3 bg-red-100 text-red-800 rounded shadow-sm">
+                    {{ session('error') }}
+                </div>
+            @endif
 
             <div class="flex flex-col ">
                 @foreach ($interestingPlaces as $place)
@@ -46,7 +53,7 @@
                             </div>
 
                             <form action="{{ route('interesting_places.destroy', $place->id) }}" method="POST"
-                                  onsubmit="return confirm('¿Seguro que quieres eliminar este lugar?')">
+                                  onsubmit="return confirm('Seguro?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" 

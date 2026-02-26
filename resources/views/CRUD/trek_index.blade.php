@@ -20,7 +20,7 @@
                 </div>
             @enderror
 
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col">
                 @foreach ($treks as $trek)
                     <div class="bg-white p-8 shadow-sm rounded-lg border border-gray-100">
 
@@ -29,14 +29,26 @@
                         </h1>
                         <br>
 
-                        <div class="space-y-1 text-gray-700">
-                            <p><strong>Registre: </strong>{{ $trek->regNumber }}</p>
-                            <p><strong>Municipi: </strong>{{ $trek->municipality->name }}</p>
-                            <p><strong>Estat: </strong>{{ $trek->status == 'y' ? 'Activa' : 'Inactiva' }}</p>
-                            
-                            <p><span class="font-medium text-gray-600">created at:</span> {{ $trek->created_at }}</p>
-                            <p><span class="font-medium text-gray-600">updated at:</span> {{ $trek->updated_at }}</p>
-                        </div>
+                    <div class="space-y-1 text-gray-700">
+                        <p><strong>Registre: </strong>{{ $trek->regNumber }}</p>
+                        <p><strong>Municipi: </strong>{{ $trek->municipality->name }}</p>
+                        <p><strong>Estat: </strong>{{ $trek->status == 'y' ? 'Activa' : 'Inactiva' }}</p>
+                        
+                        <br>
+                        <p><strong>Llocs d'Interès:</strong></p>
+                        <ul class="list-disc ml-8 mt-2">
+                            @forelse($trek->interestingPlaces->sortBy('pivot.order') as $place)
+                                <li>
+                                    <strong> {{ $place->pivot->order }}:</strong> {{ $place->name }} 
+                                </li>
+                            @empty
+                            @endforelse
+                        </ul>
+                        
+                        <br>
+                        <p><span class="font-medium text-gray-600">created at:</span> {{ $trek->created_at }}</p>
+                        <p><span class="font-medium text-gray-600">updated at:</span> {{ $trek->updated_at }}</p>
+                    </div>
                         
                         <br>
                         <div class="flex justify-between items-center text-sm font-medium">
@@ -51,8 +63,7 @@
                                 </a>
                             </div>
 
-                            <form action="{{ route('treks.destroy', $trek->id) }}" method="POST"
-                                  onsubmit="return confirm('¿Seguro que quieres eliminar esta excursión?')">
+                            <form action="{{ route('treks.destroy', $trek->id) }}" method="POST"onsubmit="return confirm('Seguro?')" >
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" 

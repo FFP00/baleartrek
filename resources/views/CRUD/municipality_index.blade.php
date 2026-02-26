@@ -11,6 +11,11 @@
                 <div class="mb-4 p-4 bg-red-100 text-red-700 rounded border-l-4 border-red-500">{{ $message }}</div>
             @enderror
 
+            @if(session('error'))
+                <div class="mb-4 p-3 bg-red-100 text-red-800 rounded shadow-sm">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="flex flex-col">
                 @foreach ($municipalities as $muni)
                     <div class="bg-white p-8 shadow-sm rounded-lg border border-gray-100">
@@ -27,7 +32,7 @@
                                 <a href="{{ route('municipality.show', $muni->id) }}" class="px-6 py-1.5 bg-emerald-500 text-white rounded">Show</a>
                                 <a href="{{ route('municipality.edit', $muni->id) }}" class="px-6 py-1.5 bg-blue-500 text-white rounded">Edit</a>
                             </div>
-                            <form action="{{ route('municipality.destroy', $muni->id) }}" method="POST" onsubmit="return confirm('Segur?')">
+                            <form action="{{ route('municipality.destroy', $muni->id) }}" method="POST" onsubmit="return confirm('Seguro?')">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="px-6 py-1.5 bg-red-500 text-white rounded">Delete</button>
                             </form>

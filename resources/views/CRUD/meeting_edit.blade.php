@@ -26,7 +26,7 @@
 
                     {{-- Excursió (Trek) --}}
                     <div>
-                        <label class="block font-medium">Excursió (Trek)</label>
+                        <label class="block font-medium">Trek</label>
                         <select name="trek_id" class="w-full border-gray-300 rounded @error('trek_id') border-red-500 @enderror">
                             @foreach($treks as $trek)
                                 <option value="{{ $trek->id }}" {{ old('trek_id', $meeting->trek_id) == $trek->id ? 'selected' : '' }}>

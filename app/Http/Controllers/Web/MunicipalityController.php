@@ -8,7 +8,7 @@ use App\Models\Zone;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\MunicipalityRequest;
-
+use Illuminate\Database\QueryException;
 class MunicipalityController extends Controller
 {
     public function index()
@@ -51,10 +51,11 @@ class MunicipalityController extends Controller
     public function destroy(Municipality $municipality)
     {
         try {
-            $municipality->delete();
-            return back()->with('success', 'Municipi eliminat');
-        } catch (\Illuminate\Database\QueryException $e) {
-            return back()->withErrors(['constraint' => 'No es pot eliminar: aquest municipi té rutes o dades vinculades.']);
+            $municipality->deleteOrFail();
+            return redirect()->route('municipality.index')->with('status', 'Lloc eliminat correctament');
+        } catch (QueryException $e) {
+            return back()->with('error', 'No es pot eliminar: aquest municipi té rutes o dades vinculades.');
         }
+
     }
 }

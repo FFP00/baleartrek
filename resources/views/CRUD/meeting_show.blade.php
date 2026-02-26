@@ -5,31 +5,37 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white p-8 shadow-sm rounded-lg border border-gray-100">
-                <h1 class="text-xl"><strong>Trobada: {{ $meeting->trek->name }}</strong></h1>
-                <br>
-                <div class="space-y-1 text-gray-700">
-                    <p><strong>Guia: </strong>{{ $meeting->user->name }}</p>
-                    <p><strong>Dia de l'excursió: </strong>{{ $meeting->day }}</p>
-                    <p><strong>Hora: </strong>{{ $meeting->time }}</p>
-                    <p><strong>Inici Inscripció: </strong>{{ $meeting->appDateIni }}</p>
-                    <p><strong>Fi Inscripció: </strong>{{ $meeting->appDateEnd }}</p>
-                    <p><strong>Puntuació acumulada: </strong>{{ $meeting->totalScore }} ({{ $meeting->countScore }} vots)</p>
-                    <br>
-                    <p><span class="font-medium text-gray-600">created at:</span> {{ $meeting->created_at }}</p>
-                    <p><span class="font-medium text-gray-600">updated at:</span> {{ $meeting->updated_at }}</p>
+                        @error('constraint')
+                <div class="mb-4 p-4 bg-red-100 text-red-700 rounded border-l-4 border-red-500">
+                    {{ $message }}
                 </div>
-                <br>
-                <div class="flex justify-between items-center text-sm font-medium border-t pt-4">
-                    <div class="flex gap-2">
-                        <a href="{{ route('meetings.index') }}" class="px-6 py-1.5 bg-emerald-500 text-white rounded">Tornar</a>
-                        <a href="{{ route('meetings.edit', $meeting->id) }}" class="px-6 py-1.5 bg-blue-500 text-white rounded">Edit</a>
+            @enderror
+            <div class="flex flex-col">
+                    <div class="bg-white p-8 shadow-sm rounded-lg border border-gray-100">
+                        <h1 class="text-xl"><strong>{{ $meeting->trek->name }}</strong></h1>
+                        <br>
+                        <div class="space-y-1 text-gray-700">
+                            <p><strong>Guia: </strong>{{ $meeting->user->name }}</p>
+                            <p><strong>Dia: </strong>{{ $meeting->day }}</p>
+                            <p><strong>Hora: </strong> {{ $meeting->time }}</p>
+                            <p><strong>Inscripcions Obre: </strong>{{ $meeting->appDateIni }} </p>
+                            <p><strong>Inscripcions Tanca: </strong>{{ $meeting->appDateEnd }} </p>
+                            <br>
+                            <p><span class="font-medium text-gray-600">created at:</span> {{ $meeting->created_at }}</p>
+                            <p><span class="font-medium text-gray-600">updated at:</span> {{ $meeting->updated_at }}</p>
+                        </div>
+                        <br>
+                        <div class="flex justify-between items-center text-sm font-medium">
+                            <div class="flex gap-2">
+                                <a href="{{ route('meetings.show', $meeting->id) }}" class="px-6 py-1.5 bg-emerald-500 text-white rounded hover:bg-emerald-600 transition">Show</a>
+                                <a href="{{ route('meetings.edit', $meeting->id) }}" class="px-6 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Edit</a>
+                            </div>
+                            <form action="{{ route('meetings.destroy', $meeting->id) }}" method="POST" onsubmit="return confirm('Seguro?')">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="px-6 py-1.5 bg-red-500 text-white rounded hover:bg-red-600 transition">Delete</button>
+                            </form>
+                        </div>
                     </div>
-                    <form action="{{ route('meetings.destroy', $meeting->id) }}" method="POST">
-                        @csrf @method('DELETE')
-                        <button type="submit" class="px-6 py-1.5 bg-red-500 text-white rounded">Delete</button>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
