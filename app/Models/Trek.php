@@ -10,6 +10,7 @@ use App\Models\InterestingPlace;
 class Trek extends Model
 {
     protected $fillable = [
+        "status",
         'regNumber',
         'name',
         'municipality_id',

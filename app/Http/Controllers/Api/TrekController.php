@@ -19,7 +19,8 @@ class TrekController extends Controller
     {
         try {
             // SELECCIÓ DE LES DADES
-            $treks = Trek::with(["meetings", "municipality", "municipality.island" ])
+            $treks = Trek::with(["meetings","meetings.comments","meetings.comments.images", "municipality", "municipality.island" ])
+                ->selectRaw('*, (totalScore / NULLIF(countScore, 0)) as rating')
                 ->when($request->illa, fn ($q, $illa) =>
                     $q->whereHas('municipality.island', fn ($q) =>
                         $q->where('name', '=', $illa)
@@ -159,27 +160,49 @@ class TrekController extends Controller
 
     public function find($value)
     {
-        // Preparar la query amb totes les relacions
-        $query = Trek::with([
-            'interestingPlaces',
-            'interestingPlaces.placeType',
-            'meetings',
-            'meetings.comments',
-            'meetings.users',
-            'municipality'
-        ]);
+        // 1. Iniciar la query con el cálculo del rating
+        // Usamos NULLIF para evitar la división por cero si countScore es 0
+        $query = Trek::selectRaw('*, (totalScore / NULLIF(countScore, 0)) as rating')
+            ->with([
+                'interestingPlaces',
+                'interestingPlaces.placeType',
+                'meetings',
+                'meetings.comments',
+                'meetings.comments.user', // Asegúrate de cargar el user del comentario
+                'meetings.comments.images', // Y las imágenes
+                'municipality.island'
+            ]);
 
-        // Cercar per ID (numèric) o per regNumber/municipality (alfanumèric)
+        // 2. Ejecutar la búsqueda
         $trek = is_numeric($value)
-            ? $query->findOrFail($value)  // Cerca per ID
-            : $query->where('regNumber', $value)  // Cerca per regNumber
+            ? $query->findOrFail($value)
+            : $query->where('regNumber', $value)
                     ->orWhereHas('municipality', function ($q) use ($value) {
-                            $q->where('name', $value);  // O per nom del municipi
-                        })
+                        $q->where('name', $value);
+                    })
                     ->firstOrFail();
         
-        // return response()->json($trek);
         return (new TrekResource($trek))->additional(['meta' => 'Trek trobat correctament']);
+    }
+
+    public function topRated()
+    {
+        // 1. Seleccionamos los campos y calculamos el promedio (rating)
+        // 2. Filtramos por rutas activas (status = 'y')
+        // 3. Evitamos división por cero (donde countScore > 0)
+        // 4. Ordenamos por el rating de forma descendente y limitamos a 6
+        $topTreks = Trek::with(['municipality',"municipality.island" ,'interestingPlaces'])
+            ->where('status', 'y')
+            ->where('countScore', '>', 0)
+            ->selectRaw('*, (totalScore / countScore) as rating')
+            ->orderBy('rating', 'desc')
+            ->take(6)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $topTreks
+        ], 200);
     }
 
 }

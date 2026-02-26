@@ -56,7 +56,13 @@ class MeetingController extends Controller
      */
     public function show($id)
     {
-        $meeting = Meeting::with(['user', 'trek', 'comments.user'])->find($id);
+        // Cargamos las relaciones. Asegúrate de que en el modelo Trek 
+        // la relación se llame interestingPlaces (en plural si es HasMany)
+        $meeting = Meeting::with([
+            'user', 
+            'trek.interestingPlaces', 
+            'comments.user'
+        ])->find($id);
 
         if (!$meeting) {
             return response()->json([
@@ -64,6 +70,9 @@ class MeetingController extends Controller
                 'message' => 'Meeting no encontrado.'
             ], 404);
         }
+
+        // Opcional: Si quieres extraer los lugares para enviarlos aparte o procesarlos
+        // $places = $meeting->trek->interestingPlaces;
 
         return response()->json([
             'success' => true,

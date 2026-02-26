@@ -4,9 +4,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Trek;
 use App\Models\User;
+
 use App\Http\Controllers\Api\TrekController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\MeetingController;
+use App\Http\Controllers\Api\PlacesController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
@@ -34,7 +36,12 @@ Route::middleware('CHECK-ROLEADMIN')->group(function () {
     Route::apiResource('user', UserController::class)->only('index');  // Només admin pot veure tots els usuaris
 });
 
+Route::get('/trek/top', [TrekController::class, 'topRated']); // Nuevo endpoint
+Route::get('/trek/find/{value}', [TrekController::class, 'find']);
+Route::apiResource('trek', TrekController::class)->except('show');
 // Rutes 'trek'
 Route::get('/trek/find/{value}', [TrekController::class, 'find']);  // 'find' substitueix 'show'
 Route::apiResource('trek', TrekController::class)->except('show');  // 'except' perquè 'show' està substituït per 'find'
+
 Route::apiResource('meeting', MeetingController::class);
+Route::apiResource('place', PlacesController::class);

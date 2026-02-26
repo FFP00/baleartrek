@@ -23,7 +23,7 @@ class CommentFactory extends Factory
             'comment' => $this->faker->sentence(),
             'user_id' => User::inRandomOrder()->value('id'),
             'meeting_id' => Meeting::inRandomOrder()->value('id'),
-            'score' => $this->faker->numberBetween(0, 5),
+            'score' => $this->faker->numberBetween(1, 5),
             'status' => $this->faker->randomElement(['y', 'n']),
             'created_at' => now(),
             'updated_at' => now(),

@@ -22,13 +22,20 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(LoginRequest $request)
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        $user = Auth::user();
+        
+        // Generamos el token de Sanctum
+        $token = $user->createToken('auth_token')->plainTextToken;
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return response()->json([
+            'user' => $user,
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+        ]);
     }
 
     /**
